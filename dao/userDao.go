@@ -1,7 +1,7 @@
 package dao
 
 import (
-	douyindemo "douoooyindemo"
+	"douoooyindemo/common"
 	"douoooyindemo/entity"
 )
 
@@ -15,26 +15,27 @@ type UserManager interface {
 type manager struct {
 }
 
+//dao接口UserMgr
 var UserMgr UserManager = &manager{}
 
 //登录
 func (mgr *manager) Login(name, password string) entity.User {
 	var user entity.User
 
-	douyindemo.Db.Where("name = ? and password = ?", name, password).First(&user)
+	common.Db.Where("name = ? and password = ?", name, password).First(&user)
 	return user
 }
 
 //注册
 func (mgr *manager) Register(user *entity.User) {
-	douyindemo.Db.Create(user)
+	common.Db.Create(user)
 }
 
 //根据id查询
 func (mgr *manager) GetInfoById(uid uint64) entity.User {
 	var user entity.User
 
-	douyindemo.Db.Where("id = ?", uid).First(&user)
+	common.Db.Where("id = ?", uid).First(&user)
 	return user
 }
 
@@ -42,6 +43,6 @@ func (mgr *manager) GetInfoById(uid uint64) entity.User {
 func (mgr *manager) GetUserByName(name string) entity.User {
 	var user entity.User
 
-	douyindemo.Db.Where("name = ?", name).First(&user)
+	common.Db.Where("name = ?", name).First(&user)
 	return user
 }

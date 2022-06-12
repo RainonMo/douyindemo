@@ -1,12 +1,14 @@
 package service
 
 import (
+	"douoooyindemo/common"
 	"douoooyindemo/dao"
 	"douoooyindemo/entity"
 
 	"github.com/golang-module/carbon/v2"
 )
 
+//service接口WebUserService
 type WebUserService struct{}
 
 //登录
@@ -36,4 +38,17 @@ func (u *WebUserService) Register(param entity.AdminWebUserLoginVO) (bool,*entit
 	}
 }
 
-//token
+//根据token获取用户
+func (u *WebUserService) GetUserByToken(token string) (entity.User, error) {
+	var user entity.User
+
+	uid, err := common.GetUidByToken(token)
+	if err != nil {
+		return user, err
+
+	}
+
+	user = dao.UserMgr.GetInfoById(uid)
+
+	return user, nil
+}
